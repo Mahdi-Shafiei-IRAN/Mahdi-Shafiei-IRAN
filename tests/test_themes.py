@@ -40,3 +40,10 @@ def test_theme_shows_the_profile(name, ctx):
 @pytest.mark.parametrize("name", ORDER)
 def test_theme_output_is_deterministic(name, ctx):
     assert THEMES[name].build(ctx).assets == THEMES[name].build(ctx).assets
+
+
+# --- rotation order (added together with the last theme) ---------------------
+
+
+def test_rotation_order_matches_the_spec():
+    assert ORDER == ("terminal", "cinematic", "wow", "space-shooter", "cap-tip", "snake")
