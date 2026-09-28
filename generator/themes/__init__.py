@@ -1,6 +1,6 @@
 """Theme registry. ORDER is the daily rotation order."""
 
-from . import cinematic, terminal, wow
+from . import cinematic, space_shooter, terminal, wow
 
-THEMES = {m.NAME: m for m in (terminal, cinematic, wow)}
+THEMES = {m.NAME: m for m in (terminal, cinematic, wow, space_shooter)}
 ORDER: tuple[str, ...] = tuple(THEMES)
