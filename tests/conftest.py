@@ -142,3 +142,22 @@ def bare_ctx():
     profile = parse_profile({"name": "Ada", "username": "ada", "role": "Engineer"})
     data = parse_response(make_payload(active=False, pinned=False, repos=False))
     return BuildContext(profile, data, Photo(None, profile.initials), date(2026, 9, 28))
+
+
+# --- a whole project folder -------------------------------------------------
+
+import yaml  # noqa: E402
+
+
+@pytest.fixture
+def project_root(tmp_path, profile_raw, data):
+    from generator.github_data import cache_json
+
+    (tmp_path / "profile.yml").write_text(
+        yaml.safe_dump({**profile_raw, "photo": "me.png"}, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+    make_portrait().save(tmp_path / "me.png")
+    (tmp_path / "data").mkdir()
+    (tmp_path / "data" / "github.json").write_text(cache_json(data), encoding="utf-8")
+    return tmp_path
