@@ -1,0 +1,5 @@
+PyYAML==6.0.3
+requests==2.34.2
+Pillow==12.3.0
+pyfiglet==1.0.4
+tzdata>=2025.1
