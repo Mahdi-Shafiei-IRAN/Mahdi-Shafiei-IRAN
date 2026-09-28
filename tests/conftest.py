@@ -95,3 +95,24 @@ def data():
     from generator.github_data import parse_response
 
     return parse_response(make_payload())
+
+
+# --- photo ------------------------------------------------------------------
+
+from PIL import Image, ImageDraw  # noqa: E402
+
+
+def make_portrait() -> Image.Image:
+    """A bright face on a dark background, like a real portrait photo."""
+    img = Image.new("RGB", (400, 400), (20, 20, 24))
+    draw = ImageDraw.Draw(img)
+    draw.ellipse((130, 70, 270, 240), fill=(226, 190, 160))
+    draw.rectangle((90, 262, 310, 400), fill=(44, 44, 52))
+    return img
+
+
+@pytest.fixture
+def photo_file(tmp_path):
+    path = tmp_path / "me.png"
+    make_portrait().save(path)
+    return path
