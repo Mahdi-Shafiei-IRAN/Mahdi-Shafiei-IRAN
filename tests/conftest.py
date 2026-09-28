@@ -116,3 +116,29 @@ def photo_file(tmp_path):
     path = tmp_path / "me.png"
     make_portrait().save(path)
     return path
+
+
+# --- theme contexts ---------------------------------------------------------
+
+
+@pytest.fixture
+def ctx(profile_raw, data):
+    from generator.config import parse_profile
+    from generator.context import BuildContext
+    from generator.photo import Photo, square
+
+    profile = parse_profile(profile_raw)
+    return BuildContext(profile, data, Photo(square(make_portrait()), profile.initials), date(2026, 9, 28))
+
+
+@pytest.fixture
+def bare_ctx():
+    """Minimum profile, no contributions, no repos, no photo."""
+    from generator.config import parse_profile
+    from generator.context import BuildContext
+    from generator.github_data import parse_response
+    from generator.photo import Photo
+
+    profile = parse_profile({"name": "Ada", "username": "ada", "role": "Engineer"})
+    data = parse_response(make_payload(active=False, pinned=False, repos=False))
+    return BuildContext(profile, data, Photo(None, profile.initials), date(2026, 9, 28))
