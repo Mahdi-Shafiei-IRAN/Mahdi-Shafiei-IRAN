@@ -1,0 +1,69 @@
+name: Daily README theme
+
+on:
+  schedule:
+    - cron: "35 20 * * *" # 00:05 in Tehran (UTC+3:30)
+  workflow_dispatch:
+    inputs:
+      theme:
+        description: Theme to show now (auto = today's rotation)
+        type: choice
+        default: auto
+        options: [auto, terminal, cinematic, wow, space-shooter, cap-tip, snake]
+  push:
+    branches: [main, "feat/**"]
+    paths:
+      - profile.yml
+      - "generator/**"
+      - requirements.txt
+      - .github/workflows/daily.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: readme-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements*.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Test
+        run: python -m pytest -q
+
+      - name: Build README
+        id: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROFILE_TOKEN: ${{ secrets.PROFILE_TOKEN }}
+          THEME: ${{ inputs.theme }}
+        run: |
+          if [ -n "$THEME" ] && [ "$THEME" != "auto" ]; then
+            python -m generator build --theme "$THEME"
+          else
+            python -m generator build
+          fi
+
+      - name: Commit and push
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(readme): ${{ steps.build.outputs.theme }} for ${{ steps.build.outputs.date }}"
+          git push origin "HEAD:${{ github.ref_name }}"

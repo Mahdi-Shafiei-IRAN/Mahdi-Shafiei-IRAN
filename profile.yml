@@ -1,0 +1,43 @@
+# Everything on the profile README comes from this file plus live GitHub stats.
+# Edit it, commit and push: GitHub Actions rebuilds the README within a minute.
+# Featured projects = your pinned repositories (pin them on your GitHub profile page).
+
+name: Mahdi Shafiei
+username: Mahdi-Shafiei-IRAN
+role: Computer Engineering Student · Python & Django Developer
+tagline: Coding since 14 — writing, making videos, always learning.
+location: Iran
+about: >-
+  A computer engineering student with experience in development and small
+  project management. A passionate programmer since age 14 who loves writing,
+  making videos and constantly learning about technology.
+
+learning:
+  - Django
+  - Python
+
+skills:
+  - Python
+  - Django
+  - Django REST
+  - Qt
+  - MongoDB
+  - SQLite
+  - MySQL
+  - PostgreSQL
+  - Docker
+  - Git
+  - Linux
+  - C#
+  - HTML5
+  - CSS3
+
+education:
+  degree: B.Sc. Computer Engineering
+  university: ""   # your university's name; left empty it is simply not shown
+
+links:
+  linkedin: https://linkedin.com/in/mahdi-shafiei-iran
+
+# Optional: a picture in this repo to use instead of your GitHub avatar.
+photo: photo.jpg
