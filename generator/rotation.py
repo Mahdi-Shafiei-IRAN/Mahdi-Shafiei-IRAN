@@ -19,3 +19,11 @@ def theme_for(day: date, order: Sequence[str]) -> str:
     if not order:
         raise ValueError("theme order is empty")
     return order[(day - EPOCH).days % len(order)]
+
+
+def theme_for_hour(now: datetime, order: Sequence[str]) -> str:
+    """Rotate every hour instead of every day (`now` must be timezone-aware)."""
+    if not order:
+        raise ValueError("theme order is empty")
+    start = datetime(EPOCH.year, EPOCH.month, EPOCH.day, tzinfo=TEHRAN)
+    return order[int((now - start).total_seconds() // 3600) % len(order)]

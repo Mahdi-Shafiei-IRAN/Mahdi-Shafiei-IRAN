@@ -6,13 +6,13 @@ import argparse
 import logging
 import os
 import sys
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 from .build import BuildError, BuildResult, run
 from .config import ConfigError
 from .github_data import GitHubDataError
-from .rotation import theme_for, today_in_tehran
+from .rotation import TEHRAN, theme_for, theme_for_hour, today_in_tehran
 from .themes import ORDER
 
 
@@ -67,7 +67,7 @@ def main(argv: list[str] | None = None) -> int:
         result = run(
             args.root,
             day=day,
-            theme=args.theme,
+            theme=args.theme or (None if args.date else theme_for_hour(datetime.now(TEHRAN), ORDER)),
             offline=args.offline,
             previews=not args.no_previews,
             token=token,
