@@ -1,10 +1,13 @@
-"""OSS Builder theme: neon-green glass cards — hero, live profile scan, projects list and language stack."""
+"""OSS Builder theme: neon-green glass cards — hero, live profile scan, projects list and language stack.
+
+Viewers whose GitHub is in light mode get the cream-paper Cap Tip look instead (via <picture>)."""
 
 from __future__ import annotations
 
 from ..components import centered, image, label, page
 from ..context import BuildContext
 from ..svg import MONO, SANS, WIDTH, compact, document, esc, truncate, wrap
+from . import cap_tip
 from .base import ThemeOutput
 
 NAME = "oss-builder"
@@ -83,12 +86,13 @@ def hero_svg(ctx: BuildContext) -> str:
         )
     size = min(40.0, 470 / max(1, len(p.name) * 0.6))
     chips, x = [], 40.0
-    for i, lang in enumerate(d.languages[:3]):
-        w = max(84.0, len(lang.name) * 7.5 + 30)
+    labels = list(p.skills[:6]) or [lang.name for lang in d.languages[:3]]
+    for i, name in enumerate(labels):
+        w = max(84.0, len(name) * 7.5 + 30)
         chips.append(
             f'<g class="fade" {_delay(0.9 + i * 0.12)}><rect x="{x:g}" y="160" width="{w:g}" height="26" rx="13" '
-            f'fill="none" stroke="{NEON}" stroke-opacity=".6"/><text x="{x + 14:g}" y="177" font-size="11.5" '
-            f'fill="{MINT}">{esc(lang.name)}</text></g>'
+            f'fill="none" stroke="{NEON}" stroke-opacity=".6"/><text x="{x + w / 2:g}" y="177" text-anchor="middle" '
+            f'font-size="11.5" fill="{MINT}">{esc(name)}</text></g>'
         )
         x += w + 10
     tagline = p.tagline or p.role
@@ -291,27 +295,42 @@ def stack_svg(ctx: BuildContext) -> str:
     return document(WIDTH, h, body, title="Language stack", style=BASE_STYLE, defs=defs)
 
 
+def _slot(prefix: str, dark: str, light: str | None, alt: str, link: str = "") -> str:
+    """One README image: `dark` for dark-mode viewers, `light` (when given) for light mode."""
+    if light:
+        img = (
+            f'<picture><source media="(prefers-color-scheme: dark)" srcset="{prefix}{dark}">'
+            f'<img src="{prefix}{light}" alt="{esc(alt)}" width="840"></picture>'
+        )
+    else:
+        img = f'<img src="{prefix}{dark}" alt="{esc(alt)}" width="840">'
+    return centered([f'<a href="{link}">{img}</a>' if link else img])
+
+
 def build(ctx: BuildContext) -> ThemeOutput:
+    p = ctx.profile
     has_projects = bool(ctx.data.featured)
     has_stack = bool(ctx.data.languages)
+    has_transcript = bool(p.skills or p.learning)
     assets = {
         "hero.svg": hero_svg(ctx),
         "scan.svg": scan_svg(ctx),
-        **({"projects.svg": projects_svg(ctx)} if has_projects else {}),
-        **({"stack.svg": stack_svg(ctx)} if has_stack else {}),
+        "light-portrait.svg": cap_tip.portrait_svg(ctx),
+        **({"light-transcript.svg": cap_tip.transcript_svg(ctx)} if has_transcript else {}),
+        **({"projects.svg": projects_svg(ctx), "light-projects.svg": cap_tip.projects_svg(ctx)} if has_projects else {}),
+        **({"stack.svg": stack_svg(ctx), "light-languages.svg": cap_tip.languages_svg(ctx)} if has_stack else {}),
     }
-    repos_url = f"https://github.com/{ctx.profile.username}?tab=repositories"
+    repos_url = f"https://github.com/{p.username}?tab=repositories"
 
     def readme(prefix: str) -> str:
         return page(
-            image(prefix, "hero.svg", f"{ctx.profile.name}: profile header"),
-            image(prefix, "scan.svg", "Live profile scan"),
-            centered([f'<a href="{repos_url}"><img src="{prefix}projects.svg" alt="Projects list" width="840"></a>'])
-            if has_projects else "",
-            image(prefix, "stack.svg", "Language stack") if has_stack else "",
+            _slot(prefix, "hero.svg", "light-portrait.svg", f"{p.name}: profile header"),
+            _slot(prefix, "scan.svg", "light-transcript.svg" if has_transcript else None, "Live profile scan"),
+            _slot(prefix, "projects.svg", "light-projects.svg", "Projects list", repos_url) if has_projects else "",
+            _slot(prefix, "stack.svg", "light-languages.svg", "Language stack") if has_stack else "",
             centered([" · ".join(
-                [f'<a href="https://github.com/{ctx.profile.username}">GitHub</a>']
-                + [f'<a href="{esc(u)}">{esc(label(k))}</a>' for k, u in ctx.profile.links.items()]
+                [f'<a href="https://github.com/{p.username}">GitHub</a>']
+                + [f'<a href="{esc(u)}">{esc(label(k))}</a>' for k, u in p.links.items()]
             )]),
         )
 

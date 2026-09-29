@@ -2,7 +2,7 @@ name: Daily README theme
 
 on:
   schedule:
-    - cron: "35 20 * * *" # 00:05 in Tehran (UTC+3:30): refresh the stats daily
+    - cron: "5 * * * *" # every hour: refresh the stats
   workflow_dispatch:
     inputs:
       theme:

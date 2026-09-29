@@ -15,7 +15,7 @@ def test_offline_build_writes_readme_assets_and_previews(project_root):
     result = run(project_root, day=DAY, offline=True)
     assert (result.theme, result.failed, result.used_cache) == ("oss-builder", (), True)
     readme = (project_root / "README.md").read_text(encoding="utf-8")
-    assert 'src="assets/oss-builder/hero.svg"' in readme
+    assert 'srcset="assets/oss-builder/hero.svg"' in readme
     assert readme.endswith("<!-- theme: oss-builder · generated 2026-09-28 -->\n")
     for name in ORDER:
         preview = (project_root / "previews" / f"{name}.md").read_text(encoding="utf-8")

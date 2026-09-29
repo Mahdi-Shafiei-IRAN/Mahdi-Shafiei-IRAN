@@ -45,3 +45,12 @@ def test_theme_output_is_deterministic(name, ctx):
 
 def test_rotation_order_matches_the_spec():
     assert ORDER == ("oss-builder",)
+
+
+def test_light_mode_viewers_get_the_cap_tip_look(ctx):
+    out = THEMES["oss-builder"].build(ctx)
+    readme = out.readme("assets/x/")
+    assert readme.count('<source media="(prefers-color-scheme: dark)"') == 4
+    assert 'srcset="assets/x/hero.svg"' in readme and 'src="assets/x/light-portrait.svg"' in readme
+    hero = out.assets["hero.svg"]
+    assert all(skill in hero for skill in ctx.profile.skills[:6])
