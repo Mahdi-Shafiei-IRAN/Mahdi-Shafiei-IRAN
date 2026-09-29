@@ -2,14 +2,14 @@ name: Daily README theme
 
 on:
   schedule:
-    - cron: "5 * * * *" # every hour (theme rotates hourly)
+    - cron: "35 20 * * *" # 00:05 in Tehran (UTC+3:30): refresh the stats daily
   workflow_dispatch:
     inputs:
       theme:
         description: Theme to show now (auto = today's rotation)
         type: choice
         default: auto
-        options: [auto, terminal, cinematic, wow, space-shooter, cap-tip, snake]
+        options: [auto, oss-builder]
   push:
     branches: [main, "feat/**"]
     paths:
@@ -54,9 +54,9 @@ jobs:
           THEME: ${{ inputs.theme }}
         run: |
           if [ -n "$THEME" ] && [ "$THEME" != "auto" ]; then
-            python -m generator build --theme "$THEME"
+            python -m generator build --no-previews --theme "$THEME"
           else
-            python -m generator build
+            python -m generator build --no-previews
           fi
 
       - name: Commit and push

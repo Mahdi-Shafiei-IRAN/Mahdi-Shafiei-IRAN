@@ -1,6 +1,6 @@
-"""Theme registry. ORDER is the daily rotation order."""
+"""Theme registry. ORDER is the rotation order (a single theme for now)."""
 
-from . import cap_tip, cinematic, snake, space_shooter, terminal, wow
+from . import oss_builder
 
-THEMES = {m.NAME: m for m in (terminal, cinematic, wow, space_shooter, cap_tip, snake)}
+THEMES = {m.NAME: m for m in (oss_builder,)}
 ORDER: tuple[str, ...] = tuple(THEMES)

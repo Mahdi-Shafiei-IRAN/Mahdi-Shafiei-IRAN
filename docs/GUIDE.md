@@ -1,8 +1,6 @@
-# راهنمای README چرخشی
+# راهنمای README پروفایل
 
-هر شب ساعت ۰۰:۰۵ به وقت تهران، GitHub Actions یکی از تم‌ها را انتخاب می‌کند و `README.md` را با آمار تازه‌ی گیت‌هاب از نو می‌سازد.
-
-ترتیب تم‌ها: `terminal` ← `cinematic` ← `wow` ← `space-shooter` ← `cap-tip` ← `snake` ← دوباره از اول.
+هر شب ساعت ۰۰:۰۵ به وقت تهران، GitHub Actions فایل `README.md` را با تم `oss-builder` و آمار تازه‌ی گیت‌هاب از نو می‌سازد.
 
 ## عوض کردن اطلاعات
 
@@ -10,19 +8,11 @@
 
 - **پروژه‌های منتخب:** همان ریپوهای Pin‌شده‌ی پروفایلت هستند. در صفحه‌ی پروفایل گیت‌هاب روی «Customize your pins» بزن.
 - **عکس:** اگر `photo` را خالی بگذاری، عکس پروفایل گیت‌هابت استفاده می‌شود. برای عکس دیگر، فایل را کنار `profile.yml` بگذار (مثلاً `photo.jpg`) و در `profile.yml` بنویس `photo: photo.jpg`.
-- **`README.md`، `assets/`، `previews/` و `data/` را دستی ویرایش نکن**؛ هر شب بازنویسی می‌شوند.
+- **`README.md`، `assets/` و `data/` را دستی ویرایش نکن**؛ هر شب بازنویسی می‌شوند.
 
-## دیدن همه‌ی تم‌ها
+## ساختن دوباره همین الان
 
-پوشه‌ی `previews/` روی گیت‌هاب را باز کن. برای هر تم یک فایل هست که همیشه با آمار روز به‌روز است.
-
-## فعال کردن یک تم خاص همین الان
-
-1. در ریپو به تب **Actions** برو.
-2. از سمت چپ **Daily README theme** را انتخاب کن.
-3. روی **Run workflow** بزن، تم را انتخاب کن و دوباره **Run workflow** را بزن.
-
-این تم تا اجرای شبانه‌ی بعدی می‌ماند.
+در تب **Actions**، workflow به اسم **Daily README theme** را باز کن و **Run workflow** را بزن.
 
 ## اگر عوض شدن روزانه متوقف شد
 
@@ -40,7 +30,7 @@
 pip install -r requirements-dev.txt
 python -m pytest -q
 python -m generator list
-python -m generator build --offline --theme snake
+python -m generator build --offline --no-previews
 ```
 
 `--offline` از آمار ذخیره‌شده در `data/github.json` استفاده می‌کند. برای گرفتن آمار تازه، یک توکن گیت‌هاب را در متغیر `GITHUB_TOKEN` بگذار و `--offline` را حذف کن.

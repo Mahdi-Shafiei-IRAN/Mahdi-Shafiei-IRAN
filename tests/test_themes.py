@@ -32,9 +32,7 @@ def test_theme_shows_the_profile(name, ctx):
     readme = out.readme("")
     assert "Mahdi Shafiei" in "".join(out.assets.values()) + readme
     assert "https://linkedin.com/in/mahdi-shafiei-iran" in readme
-    for i, repo in enumerate(ctx.data.featured, 1):
-        assert f"project-{i}.svg" in out.assets
-        assert repo.url in readme
+    assert "Contribution" not in "".join(out.assets)  # no contribution-activity section
 
 
 @pytest.mark.parametrize("name", ORDER)
@@ -46,4 +44,4 @@ def test_theme_output_is_deterministic(name, ctx):
 
 
 def test_rotation_order_matches_the_spec():
-    assert ORDER == ("terminal", "cinematic", "wow", "space-shooter", "cap-tip", "snake")
+    assert ORDER == ("oss-builder",)

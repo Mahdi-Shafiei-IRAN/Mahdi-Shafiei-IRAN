@@ -8,15 +8,15 @@ from generator.build import BuildError, run
 from generator.github_data import load_cache, parse_response
 from generator.themes import ORDER, THEMES
 
-DAY = date(2026, 9, 28)  # 270 days after the epoch -> 270 % 6 == 0 -> "terminal"
+DAY = date(2026, 9, 28)
 
 
 def test_offline_build_writes_readme_assets_and_previews(project_root):
     result = run(project_root, day=DAY, offline=True)
-    assert (result.theme, result.failed, result.used_cache) == ("terminal", (), True)
+    assert (result.theme, result.failed, result.used_cache) == ("oss-builder", (), True)
     readme = (project_root / "README.md").read_text(encoding="utf-8")
-    assert 'src="assets/terminal/terminal.svg"' in readme
-    assert readme.endswith("<!-- theme: terminal · generated 2026-09-28 -->\n")
+    assert 'src="assets/oss-builder/hero.svg"' in readme
+    assert readme.endswith("<!-- theme: oss-builder · generated 2026-09-28 -->\n")
     for name in ORDER:
         preview = (project_root / "previews" / f"{name}.md").read_text(encoding="utf-8")
         assert f'src="../assets/{name}/' in preview
@@ -25,25 +25,14 @@ def test_offline_build_writes_readme_assets_and_previews(project_root):
 
 
 def test_theme_override_without_previews(project_root):
-    result = run(project_root, day=DAY, theme="snake", offline=True, previews=False)
-    assert result.theme == "snake"
+    result = run(project_root, day=DAY, theme="oss-builder", offline=True, previews=False)
+    assert result.theme == "oss-builder"
     assert not (project_root / "previews").exists()
-    assert not (project_root / "assets" / "terminal").exists()
 
 
 def test_unknown_theme(project_root):
     with pytest.raises(BuildError, match="unknown theme"):
         run(project_root, day=DAY, theme="nope", offline=True)
-
-
-def test_broken_theme_falls_back_to_the_next_one(project_root, monkeypatch):
-    def broken(ctx):
-        raise RuntimeError("boom")
-
-    monkeypatch.setattr(THEMES["terminal"], "build", broken)
-    result = run(project_root, day=DAY, offline=True)
-    assert result.theme == "cinematic" and result.failed == ("terminal",)
-    assert 'src="assets/cinematic/hero.svg"' in (project_root / "README.md").read_text(encoding="utf-8")
 
 
 def test_all_themes_broken_leaves_everything_untouched(project_root, monkeypatch):
@@ -57,7 +46,7 @@ def test_all_themes_broken_leaves_everything_untouched(project_root, monkeypatch
 
 
 def test_stale_assets_are_removed(project_root):
-    stale = project_root / "assets" / "terminal" / "project-9.svg"
+    stale = project_root / "assets" / "oss-builder" / "project-9.svg"
     stale.parent.mkdir(parents=True)
     stale.write_text("<svg/>", encoding="utf-8")
     run(project_root, day=DAY, offline=True)
@@ -78,11 +67,11 @@ def test_cli_build_and_list(project_root, tmp_path, monkeypatch, capsys):
     monkeypatch.delenv("GITHUB_TOKEN", raising=False)
     monkeypatch.delenv("PROFILE_TOKEN", raising=False)
     assert main(["build", "--offline", "--root", str(project_root), "--date", "2026-09-29"]) == 0
-    assert output.read_text(encoding="utf-8") == "theme=cinematic\ndate=2026-09-29\n"
+    assert output.read_text(encoding="utf-8") == "theme=oss-builder\ndate=2026-09-29\n"
     report = summary.read_text(encoding="utf-8")
-    assert "README theme: `cinematic` (2026-09-29)" in report and "cached stats" in report
+    assert "README theme: `oss-builder` (2026-09-29)" in report and "cached stats" in report
     assert main(["list", "--date", "2026-09-28"]) == 0
-    assert "-> terminal" in capsys.readouterr().out
+    assert "-> oss-builder" in capsys.readouterr().out
 
 
 def test_cli_returns_1_on_config_errors(tmp_path):
