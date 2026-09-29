@@ -30,6 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          # a re-run would otherwise check out the old commit and fail to push
+          ref: ${{ github.ref_name }}
 
       - uses: actions/setup-python@v7
         with:
@@ -66,4 +69,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore(readme): ${{ steps.build.outputs.theme }} for ${{ steps.build.outputs.date }}"
-          git push origin "HEAD:${{ github.ref_name }}"
+          # someone else pushed meanwhile: replay our generated files on top (ours win)
+          git push origin "HEAD:${{ github.ref_name }}" || {
+            git pull --rebase -X theirs origin "${{ github.ref_name }}"
+            git push origin "HEAD:${{ github.ref_name }}"
+          }
