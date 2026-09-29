@@ -5,17 +5,17 @@
   "followers": 3,
   "public_repos": 12,
   "stars": 19,
-  "total_contributions": 815,
+  "total_contributions": 816,
   "languages": [
     {
       "name": "Python",
       "color": "#3572A5",
-      "percent": 40.7
+      "percent": 41.1
     },
     {
       "name": "Dart",
       "color": "#00B4AB",
-      "percent": 30.8
+      "percent": 30.6
     },
     {
       "name": "HTML",
@@ -25,7 +25,7 @@
     {
       "name": "JavaScript",
       "color": "#f1e05a",
-      "percent": 7.2
+      "percent": 7.1
     },
     {
       "name": "CSS",
@@ -35,9 +35,9 @@
   ],
   "featured": [
     {
-      "name": "server-status",
+      "name": "karshar",
       "description": "",
-      "url": "https://github.com/Mahdi-Shafiei-IRAN/server-status",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/karshar",
       "stars": 2,
       "forks": 0,
       "language": "HTML",
@@ -53,22 +53,40 @@
       "language_color": "#f1e05a"
     },
     {
-      "name": "karshar",
+      "name": "economyreporter",
       "description": "",
-      "url": "https://github.com/Mahdi-Shafiei-IRAN/karshar",
-      "stars": 2,
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/economyreporter",
+      "stars": 1,
       "forks": 0,
-      "language": "HTML",
-      "language_color": "#e34c26"
+      "language": "Dart",
+      "language_color": "#00B4AB"
     },
     {
-      "name": "ll1_parser",
+      "name": "ITServiceLog",
       "description": "",
-      "url": "https://github.com/Mahdi-Shafiei-IRAN/ll1_parser",
-      "stars": 2,
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/ITServiceLog",
+      "stars": 1,
       "forks": 0,
       "language": "Python",
       "language_color": "#3572A5"
+    },
+    {
+      "name": "BojanStore",
+      "description": "Persian right-to-left retail platform — Next.js 15 storefront, admin panel, and a layered .NET 10 API, built from a 160-screen design system.",
+      "url": "https://github.com/Parthian-Cataphracts/BojanStore",
+      "stars": 2,
+      "forks": 0,
+      "language": "C#",
+      "language_color": "#7355dd"
+    },
+    {
+      "name": "Knight",
+      "description": "",
+      "url": "https://github.com/Parthian-Cataphracts/Knight",
+      "stars": 2,
+      "forks": 0,
+      "language": "C#",
+      "language_color": "#7355dd"
     }
   ],
   "weeks": [
@@ -2375,7 +2393,7 @@
       },
       {
         "date": "2026-09-29",
-        "count": 11,
+        "count": 12,
         "level": 1,
         "weekday": 2
       }
