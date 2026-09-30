@@ -95,3 +95,11 @@ def test_dark_contribution_card_has_the_snake(ctx):
     dark = THEMES["oss-builder"].build(ctx).assets["contrib.svg"]
     assert dark.count("<animateTransform") == 7  # head + its looking pupils + 5 body segments
     assert 'fill="#1e1b4b"' in dark  # the snake has a face
+
+
+def test_light_contribution_card_has_its_own_teal_snake(ctx):
+    out = THEMES["oss-builder"].build(ctx)
+    light, dark = out.assets["light-contrib.svg"], out.assets["contrib.svg"]
+    assert light.count("<animateTransform") == 7
+    assert "#14b8a6" in light and "#14b8a6" not in dark  # teal snake only on paper
+    assert "#c084fc" in dark and "#c084fc" not in light  # purple snake only in dark mode

@@ -37,7 +37,17 @@ def route(goals: list[Point], start: Point = (0, 0)) -> tuple[list[Point], dict[
     return path, eaten
 
 
-def board(ctx: BuildContext, x0: float, y0: float, pitch: int, cell: int, heat: tuple[str, ...]) -> str:
+def board(
+    ctx: BuildContext,
+    x0: float,
+    y0: float,
+    pitch: int,
+    cell: int,
+    heat: tuple[str, ...],
+    *,
+    head: str = HEAD,
+    tail: str = TAIL,
+) -> str:
     """Heatmap cells (eaten ones fade to the empty colour) plus the animated snake on top."""
     cells = grid(ctx.data.weeks)
     goals = [(c.col, c.row) for c in cells if c.count > 0]
@@ -70,13 +80,15 @@ def board(ctx: BuildContext, x0: float, y0: float, pitch: int, cell: int, heat: 
                 f'<g><animateTransform attributeName="transform" type="translate" values="{positions}" '
                 f'keyTimes="{key_times}" calcMode="discrete" {dur}/>'
                 f'<rect x="{inset:.1f}" y="{inset:.1f}" width="{size:.1f}" height="{size:.1f}" rx="3" '
-                f'fill="{TAIL}" opacity="{1 - k * 0.1:.2f}"/></g>'
+                f'fill="{tail}" opacity="{1 - k * 0.1:.2f}"/></g>'
             )
-        segments.append(_head(path, x0, y0, pitch, cell, key_times, dur))
+        segments.append(_head(path, x0, y0, pitch, cell, key_times, dur, head))
     return "".join(rect(c) for c in cells) + "".join(segments)
 
 
-def _head(path: list[Point], x0: float, y0: float, pitch: int, cell: int, key_times: str, dur: str) -> str:
+def _head(
+    path: list[Point], x0: float, y0: float, pitch: int, cell: int, key_times: str, dur: str, color: str
+) -> str:
     """A slightly bigger head with a cute face: big eyes whose pupils look where the snake is going."""
     positions = ";".join(f"{x0 + p[0] * pitch:g},{y0 + p[1] * pitch:g}" for p in path)
     looks = ["1,0"] + [
@@ -91,7 +103,7 @@ def _head(path: list[Point], x0: float, y0: float, pitch: int, cell: int, key_ti
     return (
         f'<g><animateTransform attributeName="transform" type="translate" values="{positions}" '
         f'keyTimes="{key_times}" calcMode="discrete" {dur}/>'
-        f'<rect x="{o}" y="{o}" width="{s}" height="{s}" rx="5" fill="{HEAD}"/>'
+        f'<rect x="{o}" y="{o}" width="{s}" height="{s}" rx="5" fill="{color}"/>'
         f"{eyes}"
         f'<g><animateTransform attributeName="transform" type="translate" values="{";".join(looks)}" '
         f'keyTimes="{key_times}" calcMode="discrete" {dur}/>{pupils}</g>'

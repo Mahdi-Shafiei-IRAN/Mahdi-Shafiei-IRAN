@@ -4,7 +4,8 @@ on cream paper cards. oss_builder shows these to viewers whose GitHub is in ligh
 from __future__ import annotations
 
 from ..context import BuildContext
-from ..svg import SANS, WIDTH, compact, document, esc, grid, rng, truncate, wrap
+from ..svg import SANS, WIDTH, compact, document, esc, rng, truncate, wrap
+from . import snake_trail
 
 NIGHT, INDIGO = "#0f172a", "#1e1b4b"
 TEXT, MUTED, SOFT = "#f8fafc", "#94a3b8", "#cbd5e1"
@@ -293,22 +294,15 @@ def visit_svg(ctx: BuildContext, url: str) -> str:
 
 
 WARM = ("#efe6cc", "#f6d58e", "#eeb05a", "#d9772e", "#9f1239")
+SNAKE_HEAD, SNAKE_TAIL = "#14b8a6", "#0f766e"  # teal, like the confetti, so it stands out on warm paper
 
 
 def contrib_svg(ctx: BuildContext) -> str:
-    """The year's contributions on cream paper, in warm ink from pale gold to maroon."""
+    """The year's contributions on cream paper, in warm ink from pale gold to maroon, with a teal snake."""
     pitch, cell = 14, 11
     gx, gy = (WIDTH - 53 * pitch) // 2, 106
     h = gy + 7 * pitch + 58
-    columns: dict[int, list[str]] = {}
-    for c in grid(ctx.data.weeks):
-        columns.setdefault(c.col, []).append(
-            f'<rect x="{gx + c.col * pitch}" y="{gy + c.row * pitch}" width="{cell}" height="{cell}" rx="2" '
-            f'fill="{WARM[c.level]}"/>'
-        )
-    cells = "".join(
-        f'<g class="up" style="animation-delay:{0.2 + col * 0.02:.2f}s">{"".join(r)}</g>' for col, r in columns.items()
-    )
+    cells = snake_trail.board(ctx, gx, gy, pitch, cell, WARM, head=SNAKE_HEAD, tail=SNAKE_TAIL)
     ly = gy + 7 * pitch + 24
     lx = WIDTH - gx - 5 * pitch - 30
     legend = (
@@ -323,7 +317,8 @@ def contrib_svg(ctx: BuildContext) -> str:
         _paper(h)
         + _heading("CONTRIBUTIONS")
         + f'<text x="{WIDTH / 2:g}" y="90" text-anchor="middle" font-size="14" font-style="italic" '
-        f'fill="{INK_SOFT}">{ctx.data.total_contributions:,} contributions in the last year</text>'
+        f'fill="{INK_SOFT}">{ctx.data.total_contributions:,} contributions in the last year · '
+        f'<tspan fill="{SNAKE_TAIL}">snake mode</tspan></text>'
         + cells
         + legend
     )
