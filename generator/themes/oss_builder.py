@@ -117,7 +117,9 @@ def hero_svg(ctx: BuildContext) -> str:
 
 def _info_rows(ctx: BuildContext) -> list[tuple[str, str]]:
     p, d = ctx.profile, ctx.data
-    contact = p.links.get("linkedin", "").replace("https://", "").replace("www.", "").replace("linkedin.com/", "")
+    contact = site_label(p.links["website"]) if p.links.get("website") else (
+        p.links.get("linkedin", "").replace("https://", "").replace("www.", "").replace("linkedin.com/", "")
+    )
     rows = [
         ("Subject", p.name),
         ("Handle", f"@{p.username}"),
@@ -295,6 +297,45 @@ def stack_svg(ctx: BuildContext) -> str:
     return document(WIDTH, h, body, title="Language stack", style=BASE_STYLE, defs=defs)
 
 
+def site_label(url: str) -> str:
+    return url.split("://", 1)[-1].rstrip("/")
+
+
+def visit_svg(ctx: BuildContext, url: str) -> str:
+    """A big call-to-action card for the personal website."""
+    h = 160
+    defs, body = _glass(h)
+    defs += (
+        f'<linearGradient id="url" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{NEON}"/>'
+        f'<stop offset="1" stop-color="#bef264"/></linearGradient>'
+    )
+    site = site_label(url)
+    size = min(46.0, 520 / max(1, len(site) * 0.58))
+    bx, by, bw, bh = 612, 54, 190, 52
+    body += (
+        _inner(18, 18, WIDTH - 36, h - 36)
+        + f'<text x="44" y="54" font-size="12" fill="{MUTED}">&gt; portfolio --open '
+        f'<tspan class="blink" fill="{MINT}">█</tspan></text>'
+        + f'<text class="fade" {_delay(0.2)} x="42" y="{60 + size:.0f}" font-family="{SANS}" font-size="{size:.0f}" '
+        f'font-weight="800" fill="url(#url)" filter="url(#glow)">{esc(site)}</text>'
+        + f'<text class="fade" {_delay(0.5)} x="44" y="132" font-size="11.5" fill="{SOFT}">'
+        "Drag a role · jump through a black hole · read the full story</text>"
+        + f'<rect class="ring" x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="{bh / 2}" fill="none" '
+        f'stroke="{NEON}" stroke-width="2"/>'
+        + f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="{bh / 2}" fill="{NEON}" filter="url(#glow)"/>'
+        + f'<text x="{bx + 64}" y="{by + 33}" text-anchor="middle" font-family="{SANS}" font-size="19" '
+        f'font-weight="800" fill="{INK}">VISIT</text>'
+        + f'<g class="nudge"><path d="M{bx + 118} {by + 26}h34m-12-12l12 12-12 12" fill="none" stroke="{INK}" '
+        'stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></g>'
+    )
+    style = BASE_STYLE + (
+        ".nudge{animation:nudge 1.2s ease-in-out infinite}@keyframes nudge{50%{transform:translateX(7px)}}"
+        ".ring{transform-box:fill-box;transform-origin:center;animation:ring 2s ease-out infinite}"
+        "@keyframes ring{from{opacity:.8;transform:scale(1)}to{opacity:0;transform:scale(1.18,1.5)}}"
+    )
+    return document(WIDTH, h, body, title=f"Visit {site}", style=style, defs=defs)
+
+
 def _slot(prefix: str, dark: str, light: str | None, alt: str, link: str = "") -> str:
     """One README image: `dark` for dark-mode viewers, `light` (when given) for light mode."""
     if light:
@@ -312,10 +353,12 @@ def build(ctx: BuildContext) -> ThemeOutput:
     has_projects = bool(ctx.data.featured)
     has_stack = bool(ctx.data.languages)
     has_transcript = bool(p.skills or p.learning)
+    site = p.links.get("website", "")
     assets = {
         "hero.svg": hero_svg(ctx),
         "scan.svg": scan_svg(ctx),
         "light-portrait.svg": cap_tip.portrait_svg(ctx),
+        **({"visit.svg": visit_svg(ctx, site), "light-visit.svg": cap_tip.visit_svg(ctx, site)} if site else {}),
         **({"light-transcript.svg": cap_tip.transcript_svg(ctx)} if has_transcript else {}),
         **({"projects.svg": projects_svg(ctx), "light-projects.svg": cap_tip.projects_svg(ctx)} if has_projects else {}),
         **({"stack.svg": stack_svg(ctx), "light-languages.svg": cap_tip.languages_svg(ctx)} if has_stack else {}),
@@ -324,13 +367,14 @@ def build(ctx: BuildContext) -> ThemeOutput:
 
     def readme(prefix: str) -> str:
         return page(
-            _slot(prefix, "hero.svg", "light-portrait.svg", f"{p.name}: profile header"),
+            _slot(prefix, "hero.svg", "light-portrait.svg", f"{p.name}: profile header", site),
+            _slot(prefix, "visit.svg", "light-visit.svg", f"Visit {site_label(site)}", site) if site else "",
             _slot(prefix, "scan.svg", "light-transcript.svg" if has_transcript else None, "Live profile scan"),
             _slot(prefix, "projects.svg", "light-projects.svg", "Projects list", repos_url) if has_projects else "",
             _slot(prefix, "stack.svg", "light-languages.svg", "Language stack") if has_stack else "",
             centered([" · ".join(
-                [f'<a href="https://github.com/{p.username}">GitHub</a>']
-                + [f'<a href="{esc(u)}">{esc(label(k))}</a>' for k, u in p.links.items()]
+                [f'<a href="{esc(u)}">{esc(label(k))}</a>' for k, u in p.links.items()]
+                + [f'<a href="https://github.com/{p.username}">GitHub</a>']
             )]),
         )
 

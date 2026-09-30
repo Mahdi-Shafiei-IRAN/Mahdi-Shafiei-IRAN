@@ -259,3 +259,34 @@ def languages_svg(ctx: BuildContext) -> str:
     style = f"text{{font-family:{SERIF}}}{FADE}"
     body = _paper(h) + _heading("LANGUAGES") + "".join(rows)
     return document(WIDTH, round(h), body, title="Languages", style=style)
+
+
+def visit_svg(ctx: BuildContext, url: str) -> str:
+    """The light-mode call-to-action card for the personal website."""
+    h = 150
+    site = url.split("://", 1)[-1].rstrip("/")
+    size = min(40.0, 480 / max(1, len(site) * 0.55))
+    bx, by, bw, bh = 620, 50, 170, 50
+    body = (
+        _paper(h)
+        + f'<text x="48" y="52" font-size="12" letter-spacing="5" fill="{GOLD}" font-family="{SANS}" '
+        'font-weight="700">VISIT MY PORTFOLIO</text>'
+        + f'<text class="up" x="46" y="{56 + size:.0f}" font-size="{size:.0f}" font-weight="700" '
+        f'fill="{MAROON}">{esc(site)}</text>'
+        + f'<text class="up" style="animation-delay:.3s" x="48" y="122" font-size="13" font-style="italic" '
+        f'fill="{INK_SOFT}">Drag a role · jump through a black hole · read the full story</text>'
+        + f'<rect class="ring" x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="{bh / 2}" fill="none" '
+        f'stroke="{MAROON}" stroke-width="2"/>'
+        + f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="{bh / 2}" fill="{MAROON}"/>'
+        + f'<text x="{bx + 62}" y="{by + 32}" text-anchor="middle" font-size="19" font-weight="700" '
+        f'fill="{PAPER}">Visit</text>'
+        + f'<g class="nudge"><path d="M{bx + 106} {by + 25}h32m-11-11l11 11-11 11" fill="none" stroke="{PAPER}" '
+        'stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>'
+    )
+    style = (
+        f"text{{font-family:{SERIF}}}{FADE}"
+        ".nudge{animation:nudge 1.2s ease-in-out infinite}@keyframes nudge{50%{transform:translateX(7px)}}"
+        ".ring{transform-box:fill-box;transform-origin:center;animation:ring 2s ease-out infinite}"
+        "@keyframes ring{from{opacity:.8;transform:scale(1)}to{opacity:0;transform:scale(1.18,1.5)}}"
+    )
+    return document(WIDTH, h, body, title=f"Visit {site}", style=style)

@@ -54,3 +54,14 @@ def test_light_mode_viewers_get_the_cap_tip_look(ctx):
     assert 'srcset="assets/x/hero.svg"' in readme and 'src="assets/x/light-portrait.svg"' in readme
     hero = out.assets["hero.svg"]
     assert all(skill in hero for skill in ctx.profile.skills[:6])
+
+
+def test_website_gets_a_visit_card_and_a_clickable_header(ctx):
+    from dataclasses import replace
+
+    profile = replace(ctx.profile, links={"website": "https://example.dev", **ctx.profile.links})
+    out = THEMES["oss-builder"].build(replace(ctx, profile=profile))
+    readme = out.readme("assets/x/")
+    assert "example.dev" in out.assets["visit.svg"] and "example.dev" in out.assets["light-visit.svg"]
+    assert readme.count('<a href="https://example.dev"><picture>') == 2  # header + visit card
+    assert "example.dev" in out.assets["scan.svg"]  # contact row

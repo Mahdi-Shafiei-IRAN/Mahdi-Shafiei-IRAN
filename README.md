@@ -1,5 +1,9 @@
 <p align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/hero.svg"><img src="assets/oss-builder/light-portrait.svg" alt="Mahdi Shafiei: profile header" width="840"></picture>
+  <a href="https://mahdishafie.ir"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/hero.svg"><img src="assets/oss-builder/light-portrait.svg" alt="Mahdi Shafiei: profile header" width="840"></picture></a>
+</p>
+
+<p align="center">
+  <a href="https://mahdishafie.ir"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/visit.svg"><img src="assets/oss-builder/light-visit.svg" alt="Visit mahdishafie.ir" width="840"></picture></a>
 </p>
 
 <p align="center">
@@ -15,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Mahdi-Shafiei-IRAN">GitHub</a> · <a href="https://linkedin.com/in/mahdi-shafiei-iran">LinkedIn</a>
+  <a href="https://mahdishafie.ir">Website</a> · <a href="https://linkedin.com/in/mahdi-shafiei-iran">LinkedIn</a> · <a href="https://github.com/Mahdi-Shafiei-IRAN">GitHub</a>
 </p>
 
 <!-- theme: oss-builder · generated 2026-09-30 -->
