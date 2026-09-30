@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from ..components import centered, image, label, page
 from ..context import BuildContext
-from ..svg import MONO, SANS, WIDTH, compact, document, esc, truncate, wrap
+from ..svg import MONO, SANS, WIDTH, compact, document, esc, grid, truncate, wrap
 from . import cap_tip
 from .base import ThemeOutput
 
@@ -297,6 +297,47 @@ def stack_svg(ctx: BuildContext) -> str:
     return document(WIDTH, h, body, title="Language stack", style=BASE_STYLE, defs=defs)
 
 
+HEAT = ("#10231a", "#0e4429", "#006d32", "#26a641", "#39d353")
+PITCH, CELL = 14, 11
+
+
+def contrib_svg(ctx: BuildContext) -> str:
+    """Contribution Activity: the year's heatmap in neon green, revealed column by column."""
+    gx, gy = (WIDTH - 53 * PITCH) // 2, 104
+    h = gy + 7 * PITCH + 40
+    defs, body = _glass(h)
+    defs += (
+        f'<linearGradient id="title" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{NEON}"/>'
+        f'<stop offset="1" stop-color="#86efac"/></linearGradient>'
+    )
+    columns: dict[int, list[str]] = {}
+    for c in grid(ctx.data.weeks):
+        columns.setdefault(c.col, []).append(
+            f'<rect x="{gx + c.col * PITCH}" y="{gy + c.row * PITCH}" width="{CELL}" height="{CELL}" rx="2.5" '
+            f'fill="{HEAT[c.level]}"/>'
+        )
+    cells = "".join(f'<g class="fade" {_delay(0.2 + col * 0.02)}>{"".join(r)}</g>' for col, r in columns.items())
+    lx = WIDTH - 50 - 5 * PITCH - 34
+    legend = (
+        f'<text x="{lx - 8}" y="62" text-anchor="end" font-size="10.5" fill="{MUTED}">Less</text>'
+        + "".join(
+            f'<rect x="{lx + i * PITCH}" y="52" width="{CELL}" height="{CELL}" rx="2.5" fill="{color}"/>'
+            for i, color in enumerate(HEAT)
+        )
+        + f'<text x="{lx + 5 * PITCH + 4}" y="62" font-size="10.5" fill="{MUTED}">More</text>'
+    )
+    body += (
+        _inner(18, 18, WIDTH - 36, h - 36)
+        + f'<text x="40" y="60" font-family="{SANS}" font-size="24" font-weight="800" fill="url(#title)">'
+        "Contribution Activity</text>"
+        + f'<text x="40" y="82" font-family="{SANS}" font-size="12" font-weight="700" fill="#86efac">'
+        f"{ctx.data.total_contributions:,} contributions in the last year</text>"
+        + legend
+        + cells
+    )
+    return document(WIDTH, h, body, title="Contribution activity", style=BASE_STYLE, defs=defs)
+
+
 def site_label(url: str) -> str:
     return url.split("://", 1)[-1].rstrip("/")
 
@@ -354,6 +395,7 @@ def build(ctx: BuildContext) -> ThemeOutput:
     has_stack = bool(ctx.data.languages)
     has_transcript = bool(p.skills or p.learning)
     site = p.links.get("website", "")
+    has_contrib = ctx.data.total_contributions > 0  # 0 = no data (e.g. private profile without PROFILE_TOKEN)
     assets = {
         "hero.svg": hero_svg(ctx),
         "scan.svg": scan_svg(ctx),
@@ -362,6 +404,7 @@ def build(ctx: BuildContext) -> ThemeOutput:
         **({"light-transcript.svg": cap_tip.transcript_svg(ctx)} if has_transcript else {}),
         **({"projects.svg": projects_svg(ctx), "light-projects.svg": cap_tip.projects_svg(ctx)} if has_projects else {}),
         **({"stack.svg": stack_svg(ctx), "light-languages.svg": cap_tip.languages_svg(ctx)} if has_stack else {}),
+        **({"contrib.svg": contrib_svg(ctx), "light-contrib.svg": cap_tip.contrib_svg(ctx)} if has_contrib else {}),
     }
     repos_url = f"https://github.com/{p.username}?tab=repositories"
 
@@ -372,6 +415,7 @@ def build(ctx: BuildContext) -> ThemeOutput:
             _slot(prefix, "scan.svg", "light-transcript.svg" if has_transcript else None, "Live profile scan"),
             _slot(prefix, "projects.svg", "light-projects.svg", "Projects list", repos_url) if has_projects else "",
             _slot(prefix, "stack.svg", "light-languages.svg", "Language stack") if has_stack else "",
+            _slot(prefix, "contrib.svg", "light-contrib.svg", "Contribution activity") if has_contrib else "",
             centered([" · ".join(
                 [f'<a href="{esc(u)}">{esc(label(k))}</a>' for k, u in p.links.items()]
                 + [f'<a href="https://github.com/{p.username}">GitHub</a>']

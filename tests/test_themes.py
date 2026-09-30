@@ -32,7 +32,6 @@ def test_theme_shows_the_profile(name, ctx):
     readme = out.readme("")
     assert "Mahdi Shafiei" in "".join(out.assets.values()) + readme
     assert "https://linkedin.com/in/mahdi-shafiei-iran" in readme
-    assert "Contribution" not in "".join(out.assets)  # no contribution-activity section
 
 
 @pytest.mark.parametrize("name", ORDER)
@@ -50,7 +49,7 @@ def test_rotation_order_matches_the_spec():
 def test_light_mode_viewers_get_the_cap_tip_look(ctx):
     out = THEMES["oss-builder"].build(ctx)
     readme = out.readme("assets/x/")
-    assert readme.count('<source media="(prefers-color-scheme: dark)"') == 4
+    assert readme.count('<source media="(prefers-color-scheme: dark)"') == 5  # header, scan, projects, stack, contributions
     assert 'srcset="assets/x/hero.svg"' in readme and 'src="assets/x/light-portrait.svg"' in readme
     hero = out.assets["hero.svg"]
     assert all(skill in hero for skill in ctx.profile.skills[:6])
@@ -65,3 +64,14 @@ def test_website_gets_a_visit_card_and_a_clickable_header(ctx):
     assert "example.dev" in out.assets["visit.svg"] and "example.dev" in out.assets["light-visit.svg"]
     assert readme.count('<a href="https://example.dev"><picture>') == 2  # header + visit card
     assert "example.dev" in out.assets["scan.svg"]  # contact row
+
+
+def test_contributions_have_separate_dark_and_light_cards(ctx, bare_ctx):
+    out = THEMES["oss-builder"].build(ctx)
+    dark, light = out.assets["contrib.svg"], out.assets["light-contrib.svg"]
+    assert "#39d353" in dark and "#39d353" not in light  # neon green only in dark mode
+    assert "#9f1239" in light and "#9f1239" not in dark  # maroon ink only in light mode
+    readme = out.readme("")
+    assert '<source media="(prefers-color-scheme: dark)" srcset="contrib.svg"><img src="light-contrib.svg"' in readme
+    # no data (a private profile read without PROFILE_TOKEN) -> no empty heatmap
+    assert "contrib.svg" not in THEMES["oss-builder"].build(bare_ctx).assets
