@@ -1,6 +1,6 @@
 # Everything on the profile README comes from this file plus live GitHub stats.
 # Edit it, commit and push: GitHub Actions rebuilds the README within a minute.
-# Featured projects = your pinned repositories (pin them on your GitHub profile page).
+# Featured projects: the `projects` list below (edit it any time), else your pinned repositories.
 
 name: Mahdi Shafiei
 username: Mahdi-Shafiei-IRAN
@@ -23,6 +23,13 @@ skills:
   - Git
   - Linux
   - Networking
+
+# Projects shown in the README, in this order (repository names, up to 6).
+projects:
+  - economyreporter
+  - portfolio
+  - ITServiceLog
+  - karshar
 
 education:
   degree: B.Sc. Computer Engineering

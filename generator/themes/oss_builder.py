@@ -6,8 +6,9 @@ from __future__ import annotations
 
 from ..components import centered, image, label, page
 from ..context import BuildContext
+from ..github_data import Repo
 from ..svg import MONO, SANS, WIDTH, compact, document, esc, grid, truncate, wrap
-from . import cap_tip
+from . import cap_tip, snake_trail
 from .base import ThemeOutput
 
 NAME = "oss-builder"
@@ -214,51 +215,65 @@ def _donut(cx: float, cy: float, share: float) -> str:
     )
 
 
-def projects_svg(ctx: BuildContext) -> str:
-    repos = ctx.data.featured[:4]
-    card_w, card_h, gap = 374, 136, 16
-    rows_n = (len(repos) + 1) // 2
-    h = 96 + rows_n * card_h + (rows_n - 1) * gap + 30
+def chosen_projects(ctx: BuildContext) -> tuple[Repo, ...]:
+    """profile.yml `projects` (in that order) when set, otherwise the pinned / top-starred repos."""
+    by_name = {r.name.lower(): r for r in ctx.data.featured + ctx.data.repos}  # full repo list wins
+    picked = tuple(by_name[n.lower()] for n in ctx.profile.projects if n.lower() in by_name)
+    return (picked or ctx.data.featured)[:6]
+
+
+def projects_head_svg(count: int) -> str:
+    h = 76
     defs, body = _glass(h)
-    total = max(1, ctx.data.stars)
-    cards = []
-    for i, repo in enumerate(repos):
-        x = 36 + (i % 2) * (card_w + gap + 2)
-        y = 90 + (i // 2) * (card_h + gap)
-        desc = wrap(repo.description or "No description yet.", 40, 2)
-        tag = repo.language or "code"
-        tag_w = len(tag) * 7 + 22
-        cards.append(
-            f'<g class="fade" {_delay(0.2 + i * 0.15)}>'
-            + _inner(x, y, card_w, card_h)
-            + f'<text x="{x + 12}" y="{y + 18}" font-size="9.5" fill="{MUTED}">▸ {esc(truncate(repo.name, 40))}</text>'
-            + f'<circle cx="{x + card_w - 14}" cy="{y + 15}" r="3" fill="{NEON}"/>'
-            + f'<path d="M{x} {y + 27}h{card_w}" stroke="{NEON}" stroke-opacity=".3"/>'
-            + f'<text x="{x + 14}" y="{y + 52}" font-size="14.5" font-weight="700" fill="{MINT}">'
-            f'{esc(truncate(repo.name, 30))} <tspan class="blink">_</tspan></text>'
-            + "".join(
-                f'<text x="{x + 14}" y="{y + 72 + k * 15}" font-size="10.5" fill="{SOFT}">{esc(t)}</text>'
-                for k, t in enumerate(desc)
-            )
-            + f'<rect x="{x + 14}" y="{y + 94}" width="{tag_w}" height="17" rx="8.5" fill="none" '
-            f'stroke="{NEON}" stroke-opacity=".6"/>'
-            + f'<text x="{x + 14 + tag_w / 2}" y="{y + 106}" text-anchor="middle" font-size="9" '
-            f'fill="{MINT}">{esc(tag.lower())}</text>'
-            + f'<text x="{x + 14}" y="{y + 127}" font-size="10" fill="{MUTED}">'
-            f"★ {compact(repo.stars)}  ·  {compact(repo.forks)} forks</text>"
-            + _donut(x + card_w - 42, y + 76, repo.stars / total)
-            + "</g>"
-        )
     body += (
         _inner(14, 14, WIDTH - 28, h - 28)
-        + f'<text x="40" y="52" font-size="11" font-weight="700" letter-spacing="3" fill="{MINT}">PROJECTS.LIST</text>'
-        + f'<text x="190" y="52" font-size="11" fill="{MUTED}">./projects.sh --all</text>'
-        + f'<text x="{WIDTH - 40}" y="52" text-anchor="end" font-size="10" fill="{MUTED}">'
-        f"{len(repos)} featured</text>"
-        + f'<path d="M36 66h{WIDTH - 72}" stroke="{NEON}" stroke-opacity=".3"/>'
-        + "".join(cards)
+        + f'<text x="40" y="44" font-size="11" font-weight="700" letter-spacing="3" fill="{MINT}">PROJECTS.LIST</text>'
+        + f'<text x="190" y="44" font-size="11" fill="{MUTED}">./projects.sh --featured</text>'
+        + f'<text x="{WIDTH - 40}" y="44" text-anchor="end" font-size="10" fill="{MUTED}">'
+        f'{count} featured · click a card <tspan class="blink" fill="{MINT}">↓</tspan></text>'
     )
     return document(WIDTH, h, body, title="Projects list", style=BASE_STYLE, defs=defs)
+
+
+CARD_W, CARD_H = 410, 150
+
+
+def project_card_svg(repo: Repo, total_stars: int) -> str:
+    w, h = CARD_W, CARD_H
+    desc = wrap(repo.description or "No description yet.", 44, 2)
+    tag = repo.language or "code"
+    tag_w = len(tag) * 7 + 22
+    defs = (
+        f'<radialGradient id="g1" cx=".2" cy="0" r=".8"><stop offset="0" stop-color="{NEON}" stop-opacity=".45"/>'
+        f'<stop offset="1" stop-color="{NEON}" stop-opacity="0"/></radialGradient>'
+        '<radialGradient id="g2" cx="1" cy="1" r=".7"><stop offset="0" stop-color="#4c1d95" stop-opacity=".5"/>'
+        '<stop offset="1" stop-color="#4c1d95" stop-opacity="0"/></radialGradient>'
+    )
+    body = (
+        f'<rect x="1" y="1" width="{w - 2}" height="{h - 2}" rx="14" fill="{INK}"/>'
+        f'<rect x="1" y="1" width="{w - 2}" height="{h - 2}" rx="14" fill="url(#g1)"/>'
+        f'<rect x="1" y="1" width="{w - 2}" height="{h - 2}" rx="14" fill="url(#g2)"/>'
+        f'<rect class="pulse" x="1" y="1" width="{w - 2}" height="{h - 2}" rx="14" fill="none" stroke="{NEON}" '
+        'stroke-opacity=".45" stroke-width="1.5"/>'
+        f'<text x="16" y="24" font-size="9.5" fill="{MUTED}">▸ {esc(truncate(repo.name, 40))}</text>'
+        f'<circle cx="{w - 18}" cy="20" r="3" fill="{NEON}"/>'
+        f'<path d="M1 34h{w - 2}" stroke="{NEON}" stroke-opacity=".3"/>'
+        f'<text x="18" y="60" font-size="15" font-weight="700" fill="{MINT}">'
+        f'{esc(truncate(repo.name, 30))} <tspan class="blink">_</tspan></text>'
+        + "".join(
+            f'<text x="18" y="{82 + k * 15}" font-size="10.5" fill="{SOFT}">{esc(t)}</text>'
+            for k, t in enumerate(desc)
+        )
+        + f'<rect x="18" y="{h - 42}" width="{tag_w}" height="17" rx="8.5" fill="none" stroke="{NEON}" '
+        'stroke-opacity=".6"/>'
+        + f'<text x="{18 + tag_w / 2}" y="{h - 30}" text-anchor="middle" font-size="9" fill="{MINT}">'
+        f"{esc(tag.lower())}</text>"
+        + f'<text x="{28 + tag_w}" y="{h - 30}" font-size="10" fill="{MUTED}">★ {compact(repo.stars)}</text>'
+        + f'<text x="{w - 18}" y="{h - 14}" text-anchor="end" font-size="10" font-weight="700" fill="{MINT}">'
+        'open repo →</text>'
+        + _donut(w - 44, 82, repo.stars / max(1, total_stars))
+    )
+    return document(w, h, body, title=f"{repo.name} project", style=BASE_STYLE, defs=defs)
 
 
 def stack_svg(ctx: BuildContext) -> str:
@@ -302,7 +317,7 @@ PITCH, CELL = 14, 11
 
 
 def contrib_svg(ctx: BuildContext) -> str:
-    """Contribution Activity: the year's heatmap in neon green, revealed column by column."""
+    """Contribution Activity: the year's heatmap in neon green, with a snake eating every active day."""
     gx, gy = (WIDTH - 53 * PITCH) // 2, 104
     h = gy + 7 * PITCH + 40
     defs, body = _glass(h)
@@ -310,13 +325,6 @@ def contrib_svg(ctx: BuildContext) -> str:
         f'<linearGradient id="title" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{NEON}"/>'
         f'<stop offset="1" stop-color="#86efac"/></linearGradient>'
     )
-    columns: dict[int, list[str]] = {}
-    for c in grid(ctx.data.weeks):
-        columns.setdefault(c.col, []).append(
-            f'<rect x="{gx + c.col * PITCH}" y="{gy + c.row * PITCH}" width="{CELL}" height="{CELL}" rx="2.5" '
-            f'fill="{HEAT[c.level]}"/>'
-        )
-    cells = "".join(f'<g class="fade" {_delay(0.2 + col * 0.02)}>{"".join(r)}</g>' for col, r in columns.items())
     lx = WIDTH - 50 - 5 * PITCH - 34
     legend = (
         f'<text x="{lx - 8}" y="62" text-anchor="end" font-size="10.5" fill="{MUTED}">Less</text>'
@@ -331,11 +339,12 @@ def contrib_svg(ctx: BuildContext) -> str:
         + f'<text x="40" y="60" font-family="{SANS}" font-size="24" font-weight="800" fill="url(#title)">'
         "Contribution Activity</text>"
         + f'<text x="40" y="82" font-family="{SANS}" font-size="12" font-weight="700" fill="#86efac">'
-        f"{ctx.data.total_contributions:,} contributions in the last year</text>"
+        f"{ctx.data.total_contributions:,} contributions in the last year · "
+        f'<tspan fill="{snake_trail.HEAD}">snake mode</tspan></text>'
         + legend
-        + cells
+        + snake_trail.board(ctx, gx, gy, PITCH, CELL, HEAT)
     )
-    return document(WIDTH, h, body, title="Contribution activity", style=BASE_STYLE, defs=defs)
+    return document(WIDTH, h, body, title="Contribution activity with a snake", style=BASE_STYLE, defs=defs)
 
 
 def site_label(url: str) -> str:
@@ -389,9 +398,18 @@ def _slot(prefix: str, dark: str, light: str | None, alt: str, link: str = "") -
     return centered([f'<a href="{link}">{img}</a>' if link else img])
 
 
+def _card(prefix: str, i: int, repo: Repo) -> str:
+    return (
+        f'<a href="{esc(repo.url)}"><picture><source media="(prefers-color-scheme: dark)" '
+        f'srcset="{prefix}project-{i}.svg"><img src="{prefix}light-project-{i}.svg" alt="{esc(repo.name)}" '
+        f'width="{CARD_W}"></picture></a>'
+    )
+
+
 def build(ctx: BuildContext) -> ThemeOutput:
     p = ctx.profile
-    has_projects = bool(ctx.data.featured)
+    projects = chosen_projects(ctx)
+    has_projects = bool(projects)
     has_stack = bool(ctx.data.languages)
     has_transcript = bool(p.skills or p.learning)
     site = p.links.get("website", "")
@@ -402,18 +420,20 @@ def build(ctx: BuildContext) -> ThemeOutput:
         "light-portrait.svg": cap_tip.portrait_svg(ctx),
         **({"visit.svg": visit_svg(ctx, site), "light-visit.svg": cap_tip.visit_svg(ctx, site)} if site else {}),
         **({"light-transcript.svg": cap_tip.transcript_svg(ctx)} if has_transcript else {}),
-        **({"projects.svg": projects_svg(ctx), "light-projects.svg": cap_tip.projects_svg(ctx)} if has_projects else {}),
+        **({"projects-head.svg": projects_head_svg(len(projects)),
+            "light-projects-head.svg": cap_tip.projects_head_svg()} if has_projects else {}),
+        **{f"project-{i}.svg": project_card_svg(r, ctx.data.stars) for i, r in enumerate(projects, 1)},
+        **{f"light-project-{i}.svg": cap_tip.project_card_svg(r) for i, r in enumerate(projects, 1)},
         **({"stack.svg": stack_svg(ctx), "light-languages.svg": cap_tip.languages_svg(ctx)} if has_stack else {}),
         **({"contrib.svg": contrib_svg(ctx), "light-contrib.svg": cap_tip.contrib_svg(ctx)} if has_contrib else {}),
     }
-    repos_url = f"https://github.com/{p.username}?tab=repositories"
-
     def readme(prefix: str) -> str:
         return page(
             _slot(prefix, "hero.svg", "light-portrait.svg", f"{p.name}: profile header", site),
             _slot(prefix, "visit.svg", "light-visit.svg", f"Visit {site_label(site)}", site) if site else "",
             _slot(prefix, "scan.svg", "light-transcript.svg" if has_transcript else None, "Live profile scan"),
-            _slot(prefix, "projects.svg", "light-projects.svg", "Projects list", repos_url) if has_projects else "",
+            _slot(prefix, "projects-head.svg", "light-projects-head.svg", "Projects list") if has_projects else "",
+            centered([_card(prefix, i, r) for i, r in enumerate(projects, 1)]) if has_projects else "",
             _slot(prefix, "stack.svg", "light-languages.svg", "Language stack") if has_stack else "",
             _slot(prefix, "contrib.svg", "light-contrib.svg", "Contribution activity") if has_contrib else "",
             centered([" · ".join(

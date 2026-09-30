@@ -31,6 +31,7 @@ class Profile:
     education: Education = Education()
     links: dict[str, str] = field(default_factory=dict)
     photo: str = ""
+    projects: tuple[str, ...] = ()  # repo names to feature, in order
 
     @property
     def initials(self) -> str:
@@ -109,6 +110,7 @@ def parse_profile(raw: object) -> Profile:
         ),
         links=_links(raw),
         photo=_text(raw, "photo"),
+        projects=_list(raw, "projects"),
     )
 
 

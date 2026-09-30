@@ -99,6 +99,7 @@ class GitHubData:
     languages: tuple[Language, ...]
     featured: tuple[Repo, ...]
     weeks: tuple[tuple[Day, ...], ...]
+    repos: tuple[Repo, ...] = ()  # every public non-fork repo, most stars first
 
     @property
     def active_days(self) -> int:
@@ -120,6 +121,7 @@ class GitHubData:
             languages=tuple(Language(**x) for x in raw["languages"]),
             featured=tuple(Repo(**x) for x in raw["featured"]),
             weeks=tuple(tuple(Day(**d) for d in week) for week in raw["weeks"]),
+            repos=tuple(Repo(**x) for x in raw.get("repos", [])),
         )
 
 
@@ -187,6 +189,7 @@ def parse_response(payload: dict) -> GitHubData:
             )
             for week in calendar["weeks"]
         ),
+        repos=tuple(_repo(n) for n in own),
     )
 
 

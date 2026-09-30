@@ -49,7 +49,9 @@ def test_rotation_order_matches_the_spec():
 def test_light_mode_viewers_get_the_cap_tip_look(ctx):
     out = THEMES["oss-builder"].build(ctx)
     readme = out.readme("assets/x/")
-    assert readme.count('<source media="(prefers-color-scheme: dark)"') == 5  # header, scan, projects, stack, contributions
+    cards = len(ctx.data.featured)
+    # header, scan, projects header, one per project card, stack, contributions
+    assert readme.count('<source media="(prefers-color-scheme: dark)"') == 5 + cards
     assert 'srcset="assets/x/hero.svg"' in readme and 'src="assets/x/light-portrait.svg"' in readme
     hero = out.assets["hero.svg"]
     assert all(skill in hero for skill in ctx.profile.skills[:6])
@@ -75,3 +77,20 @@ def test_contributions_have_separate_dark_and_light_cards(ctx, bare_ctx):
     assert '<source media="(prefers-color-scheme: dark)" srcset="contrib.svg"><img src="light-contrib.svg"' in readme
     # no data (a private profile read without PROFILE_TOKEN) -> no empty heatmap
     assert "contrib.svg" not in THEMES["oss-builder"].build(bare_ctx).assets
+
+
+def test_profile_projects_pick_and_order_the_cards_and_each_links_to_its_repo(ctx):
+    from dataclasses import replace
+
+    profile = replace(ctx.profile, projects=("qt-notes", "missing-repo", "DJANGO-SHOP"))
+    out = THEMES["oss-builder"].build(replace(ctx, profile=profile))
+    readme = out.readme("assets/x/")
+    assert "qt-notes" in out.assets["project-1.svg"] and "django-shop" in out.assets["project-2.svg"]
+    assert "project-3.svg" not in out.assets  # unknown names are skipped
+    assert '<a href="https://github.com/Mahdi-Shafiei-IRAN/qt-notes"><picture>' in readme
+    assert "?tab=repositories" not in readme
+
+
+def test_dark_contribution_card_has_the_snake(ctx):
+    dark = THEMES["oss-builder"].build(ctx).assets["contrib.svg"]
+    assert dark.count("<animateTransform") == 6  # head + 5 body segments

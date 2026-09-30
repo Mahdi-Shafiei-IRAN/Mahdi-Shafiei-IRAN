@@ -210,35 +210,35 @@ def _heading(text: str) -> str:
     )
 
 
-def projects_svg(ctx: BuildContext) -> str:
-    repos = ctx.data.featured[:4]
-    card_w, card_h, gap = 374, 118, 16
-    rows_n = (len(repos) + 1) // 2
-    h = 88 + rows_n * card_h + (rows_n - 1) * gap + 30
-    cards = []
-    for i, repo in enumerate(repos):
-        x = 36 + (i % 2) * (card_w + gap + 2)
-        y = 84 + (i // 2) * (card_h + gap)
-        desc = wrap(repo.description or "No description yet.", 46, 2)
-        meta = f"★ {compact(repo.stars)}"
-        cards.append(
-            f'<g class="up" style="animation-delay:{i * 0.12:.2f}s">'
-            f'<rect x="{x}" y="{y}" width="{card_w}" height="{card_h}" rx="8" fill="#fffaf0" stroke="{PAPER_EDGE}"/>'
-            f'<text x="{x + 18}" y="{y + 32}" font-size="17" font-weight="700" fill="{MAROON}">'
-            f"{esc(truncate(repo.name, 34))}</text>"
-            + "".join(
-                f'<text x="{x + 18}" y="{y + 56 + k * 18}" font-size="13" fill="{INK_SOFT}">{esc(t)}</text>'
-                for k, t in enumerate(desc)
-            )
-            + (f'<circle cx="{x + 23}" cy="{y + card_h - 19}" r="5" fill="{repo.language_color}"/>'
-               f'<text x="{x + 34}" y="{y + card_h - 15}" font-size="12" fill="{INK_SOFT}">{esc(repo.language)}</text>'
-               if repo.language else "")
-            + f'<text x="{x + card_w - 18}" y="{y + card_h - 15}" text-anchor="end" font-size="12" '
-            f'fill="{INK_SOFT}">{meta}</text></g>'
+def projects_head_svg() -> str:
+    h = 76
+    body = (
+        _paper(h)
+        + f'<text x="{WIDTH / 2:g}" y="46" text-anchor="middle" font-size="20" letter-spacing="4" fill="{INK}">'
+        "SELECTED WORK</text>"
+    )
+    return document(WIDTH, h, body, title="Selected work", style=f"text{{font-family:{SERIF}}}")
+
+
+def project_card_svg(repo) -> str:
+    w, h = 410, 150
+    desc = wrap(repo.description or "No description yet.", 46, 3)
+    body = (
+        f'<rect x="1" y="1" width="{w - 2}" height="{h - 2}" rx="10" fill="#fffaf0" stroke="{PAPER_EDGE}" '
+        'stroke-width="2"/>'
+        f'<text x="20" y="38" font-size="18" font-weight="700" fill="{MAROON}">{esc(truncate(repo.name, 34))}</text>'
+        f'<path d="M20 50h60" stroke="{GOLD}" stroke-width="2"/>'
+        + "".join(
+            f'<text x="20" y="{74 + k * 18}" font-size="13" fill="{INK_SOFT}">{esc(t)}</text>'
+            for k, t in enumerate(desc)
         )
-    style = f"text{{font-family:{SERIF}}}{FADE}"
-    body = _paper(h) + _heading("SELECTED WORK") + "".join(cards)
-    return document(WIDTH, round(h), body, title="Selected work", style=style)
+        + (f'<circle cx="25" cy="{h - 19}" r="5" fill="{repo.language_color}"/>'
+           f'<text x="36" y="{h - 15}" font-size="12" fill="{INK_SOFT}">{esc(repo.language)}</text>'
+           if repo.language else "")
+        + f'<text x="{w - 20}" y="{h - 15}" text-anchor="end" font-size="12" fill="{MAROON}">'
+        f"★ {compact(repo.stars)}  ·  open →</text>"
+    )
+    return document(w, h, body, title=f"{repo.name} project", style=f"text{{font-family:{SERIF}}}")
 
 
 def languages_svg(ctx: BuildContext) -> str:
