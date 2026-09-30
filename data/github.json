@@ -2,20 +2,20 @@
   "login": "Mahdi-Shafiei-IRAN",
   "name": "Mahdi",
   "avatar_url": "https://avatars.githubusercontent.com/u/89502274?s=256&u=4a72685b1e0a65e73b1f7ca8f54ad639663cfe4a&v=4",
-  "followers": 3,
+  "followers": 0,
   "public_repos": 12,
   "stars": 20,
-  "total_contributions": 819,
+  "total_contributions": 0,
   "languages": [
     {
       "name": "Python",
       "color": "#3572A5",
-      "percent": 41.1
+      "percent": 41.2
     },
     {
       "name": "Dart",
       "color": "#00B4AB",
-      "percent": 30.6
+      "percent": 30.5
     },
     {
       "name": "HTML",
@@ -35,9 +35,18 @@
   ],
   "featured": [
     {
-      "name": "karshar",
-      "description": "A Persian job board: post jobs, apply, pay and open support tickets — in Django.",
-      "url": "https://github.com/Mahdi-Shafiei-IRAN/karshar",
+      "name": "windows_figlet_app",
+      "description": "Pick a font, pick a color, print giant ASCII art — a playful figlet CLI.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/windows_figlet_app",
+      "stars": 2,
+      "forks": 0,
+      "language": "Python",
+      "language_color": "#3572A5"
+    },
+    {
+      "name": "server-status",
+      "description": "Not a status page 🎂 — a typewriter-style birthday surprise in disguise.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/server-status",
       "stars": 2,
       "forks": 0,
       "language": "HTML",
@@ -53,40 +62,13 @@
       "language_color": "#f1e05a"
     },
     {
-      "name": "economyreporter",
-      "description": "Family money in one app: bank SMS → transactions, offline-first Flutter + Django.",
-      "url": "https://github.com/Mahdi-Shafiei-IRAN/economyreporter",
-      "stars": 1,
-      "forks": 0,
-      "language": "Dart",
-      "language_color": "#00B4AB"
-    },
-    {
-      "name": "ITServiceLog",
-      "description": "Daily IT help-desk log with one-click reports — built for a real IT team.",
-      "url": "https://github.com/Mahdi-Shafiei-IRAN/ITServiceLog",
-      "stars": 1,
-      "forks": 0,
-      "language": "Python",
-      "language_color": "#3572A5"
-    },
-    {
-      "name": "BojanStore",
-      "description": "Persian right-to-left retail platform — Next.js 15 storefront, admin panel, and a layered .NET 10 API, built from a 160-screen design system.",
-      "url": "https://github.com/Parthian-Cataphracts/BojanStore",
-      "stars": 2,
-      "forks": 0,
-      "language": "C#",
-      "language_color": "#7355dd"
-    },
-    {
-      "name": "Knight",
+      "name": "playground",
       "description": "",
-      "url": "https://github.com/Parthian-Cataphracts/Knight",
-      "stars": 2,
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/playground",
+      "stars": 0,
       "forks": 0,
-      "language": "C#",
-      "language_color": "#7355dd"
+      "language": "",
+      "language_color": "#8b949e"
     }
   ],
   "weeks": [
@@ -563,8 +545,8 @@
       },
       {
         "date": "2025-12-12",
-        "count": 4,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
@@ -607,8 +589,8 @@
       },
       {
         "date": "2025-12-19",
-        "count": 1,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
@@ -1531,8 +1513,8 @@
       },
       {
         "date": "2026-05-15",
-        "count": 2,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
@@ -1557,8 +1539,8 @@
       },
       {
         "date": "2026-05-19",
-        "count": 1,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 2
       },
       {
@@ -1757,8 +1739,8 @@
       },
       {
         "date": "2026-06-20",
-        "count": 2,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 6
       }
     ],
@@ -1795,8 +1777,8 @@
       },
       {
         "date": "2026-06-26",
-        "count": 1,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
@@ -1821,14 +1803,14 @@
       },
       {
         "date": "2026-06-30",
-        "count": 25,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 2
       },
       {
         "date": "2026-07-01",
-        "count": 10,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 3
       },
       {
@@ -2003,8 +1985,8 @@
       },
       {
         "date": "2026-07-29",
-        "count": 1,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 3
       },
       {
@@ -2041,8 +2023,8 @@
       },
       {
         "date": "2026-08-04",
-        "count": 33,
-        "level": 3,
+        "count": 0,
+        "level": 0,
         "weekday": 2
       },
       {
@@ -2053,14 +2035,14 @@
       },
       {
         "date": "2026-08-06",
-        "count": 4,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 4
       },
       {
         "date": "2026-08-07",
-        "count": 28,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
@@ -2091,20 +2073,20 @@
       },
       {
         "date": "2026-08-12",
-        "count": 6,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 3
       },
       {
         "date": "2026-08-13",
-        "count": 9,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 4
       },
       {
         "date": "2026-08-14",
-        "count": 3,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
@@ -2129,26 +2111,26 @@
       },
       {
         "date": "2026-08-18",
-        "count": 48,
-        "level": 4,
+        "count": 0,
+        "level": 0,
         "weekday": 2
       },
       {
         "date": "2026-08-19",
-        "count": 49,
-        "level": 4,
+        "count": 0,
+        "level": 0,
         "weekday": 3
       },
       {
         "date": "2026-08-20",
-        "count": 138,
-        "level": 4,
+        "count": 0,
+        "level": 0,
         "weekday": 4
       },
       {
         "date": "2026-08-21",
-        "count": 7,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
@@ -2185,20 +2167,20 @@
       },
       {
         "date": "2026-08-27",
-        "count": 28,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 4
       },
       {
         "date": "2026-08-28",
-        "count": 36,
-        "level": 3,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
         "date": "2026-08-29",
-        "count": 1,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 6
       }
     ],
@@ -2211,14 +2193,14 @@
       },
       {
         "date": "2026-08-31",
-        "count": 4,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 1
       },
       {
         "date": "2026-09-01",
-        "count": 3,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 2
       },
       {
@@ -2235,28 +2217,28 @@
       },
       {
         "date": "2026-09-04",
-        "count": 30,
-        "level": 3,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
         "date": "2026-09-05",
-        "count": 38,
-        "level": 3,
+        "count": 0,
+        "level": 0,
         "weekday": 6
       }
     ],
     [
       {
         "date": "2026-09-06",
-        "count": 6,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 0
       },
       {
         "date": "2026-09-07",
-        "count": 1,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 1
       },
       {
@@ -2273,52 +2255,52 @@
       },
       {
         "date": "2026-09-10",
-        "count": 16,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 4
       },
       {
         "date": "2026-09-11",
-        "count": 10,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
         "date": "2026-09-12",
-        "count": 7,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 6
       }
     ],
     [
       {
         "date": "2026-09-13",
-        "count": 2,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 0
       },
       {
         "date": "2026-09-14",
-        "count": 28,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 1
       },
       {
         "date": "2026-09-15",
-        "count": 18,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 2
       },
       {
         "date": "2026-09-16",
-        "count": 56,
-        "level": 4,
+        "count": 0,
+        "level": 0,
         "weekday": 3
       },
       {
         "date": "2026-09-17",
-        "count": 11,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 4
       },
       {
@@ -2337,20 +2319,20 @@
     [
       {
         "date": "2026-09-20",
-        "count": 24,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 0
       },
       {
         "date": "2026-09-21",
-        "count": 1,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 1
       },
       {
         "date": "2026-09-22",
-        "count": 6,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 2
       },
       {
@@ -2361,46 +2343,46 @@
       },
       {
         "date": "2026-09-24",
-        "count": 12,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 4
       },
       {
         "date": "2026-09-25",
-        "count": 16,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 5
       },
       {
         "date": "2026-09-26",
-        "count": 44,
-        "level": 4,
+        "count": 0,
+        "level": 0,
         "weekday": 6
       }
     ],
     [
       {
         "date": "2026-09-27",
-        "count": 15,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 0
       },
       {
         "date": "2026-09-28",
-        "count": 19,
-        "level": 2,
+        "count": 0,
+        "level": 0,
         "weekday": 1
       },
       {
         "date": "2026-09-29",
-        "count": 13,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 2
       },
       {
         "date": "2026-09-30",
-        "count": 2,
-        "level": 1,
+        "count": 0,
+        "level": 0,
         "weekday": 3
       }
     ]
