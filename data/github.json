@@ -4,8 +4,8 @@
   "avatar_url": "https://avatars.githubusercontent.com/u/89502274?s=256&u=4a72685b1e0a65e73b1f7ca8f54ad639663cfe4a&v=4",
   "followers": 3,
   "public_repos": 12,
-  "stars": 20,
-  "total_contributions": 819,
+  "stars": 22,
+  "total_contributions": 820,
   "languages": [
     {
       "name": "Python",
@@ -56,7 +56,7 @@
       "name": "economyreporter",
       "description": "Family money in one app: bank SMS → transactions, offline-first Flutter + Django.",
       "url": "https://github.com/Mahdi-Shafiei-IRAN/economyreporter",
-      "stars": 1,
+      "stars": 2,
       "forks": 0,
       "language": "Dart",
       "language_color": "#00B4AB"
@@ -65,7 +65,7 @@
       "name": "ITServiceLog",
       "description": "Daily IT help-desk log with one-click reports — built for a real IT team.",
       "url": "https://github.com/Mahdi-Shafiei-IRAN/ITServiceLog",
-      "stars": 1,
+      "stars": 2,
       "forks": 0,
       "language": "Python",
       "language_color": "#3572A5"
@@ -2399,13 +2399,31 @@
       },
       {
         "date": "2026-09-30",
-        "count": 2,
+        "count": 3,
         "level": 1,
         "weekday": 3
       }
     ]
   ],
   "repos": [
+    {
+      "name": "economyreporter",
+      "description": "Family money in one app: bank SMS → transactions, offline-first Flutter + Django.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/economyreporter",
+      "stars": 2,
+      "forks": 0,
+      "language": "Dart",
+      "language_color": "#00B4AB"
+    },
+    {
+      "name": "ITServiceLog",
+      "description": "Daily IT help-desk log with one-click reports — built for a real IT team.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/ITServiceLog",
+      "stars": 2,
+      "forks": 0,
+      "language": "Python",
+      "language_color": "#3572A5"
+    },
     {
       "name": "server-status",
       "description": "Not a status page 🎂 — a typewriter-style birthday surprise in disguise.",
@@ -2483,24 +2501,6 @@
       "description": "My neon GitHub profile, rebuilt every hour from live stats by a Python bot.",
       "url": "https://github.com/Mahdi-Shafiei-IRAN/Mahdi-Shafiei-IRAN",
       "stars": 2,
-      "forks": 0,
-      "language": "Python",
-      "language_color": "#3572A5"
-    },
-    {
-      "name": "economyreporter",
-      "description": "Family money in one app: bank SMS → transactions, offline-first Flutter + Django.",
-      "url": "https://github.com/Mahdi-Shafiei-IRAN/economyreporter",
-      "stars": 1,
-      "forks": 0,
-      "language": "Dart",
-      "language_color": "#00B4AB"
-    },
-    {
-      "name": "ITServiceLog",
-      "description": "Daily IT help-desk log with one-click reports — built for a real IT team.",
-      "url": "https://github.com/Mahdi-Shafiei-IRAN/ITServiceLog",
-      "stars": 1,
       "forks": 0,
       "language": "Python",
       "language_color": "#3572A5"
