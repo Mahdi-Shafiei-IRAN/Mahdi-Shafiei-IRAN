@@ -4,8 +4,8 @@
   "avatar_url": "https://avatars.githubusercontent.com/u/89502274?s=256&u=4a72685b1e0a65e73b1f7ca8f54ad639663cfe4a&v=4",
   "followers": 3,
   "public_repos": 12,
-  "stars": 19,
-  "total_contributions": 816,
+  "stars": 20,
+  "total_contributions": 819,
   "languages": [
     {
       "name": "Python",
@@ -36,7 +36,7 @@
   "featured": [
     {
       "name": "karshar",
-      "description": "",
+      "description": "A Persian job board: post jobs, apply, pay and open support tickets — in Django.",
       "url": "https://github.com/Mahdi-Shafiei-IRAN/karshar",
       "stars": 2,
       "forks": 0,
@@ -45,7 +45,7 @@
     },
     {
       "name": "portfolio",
-      "description": "",
+      "description": "Drag a role, land on its page — or jump through the black hole to my resume.",
       "url": "https://github.com/Mahdi-Shafiei-IRAN/portfolio",
       "stars": 2,
       "forks": 0,
@@ -54,7 +54,7 @@
     },
     {
       "name": "economyreporter",
-      "description": "",
+      "description": "Family money in one app: bank SMS → transactions, offline-first Flutter + Django.",
       "url": "https://github.com/Mahdi-Shafiei-IRAN/economyreporter",
       "stars": 1,
       "forks": 0,
@@ -63,7 +63,7 @@
     },
     {
       "name": "ITServiceLog",
-      "description": "",
+      "description": "Daily IT help-desk log with one-click reports — built for a real IT team.",
       "url": "https://github.com/Mahdi-Shafiei-IRAN/ITServiceLog",
       "stars": 1,
       "forks": 0,
@@ -2393,9 +2393,15 @@
       },
       {
         "date": "2026-09-29",
-        "count": 12,
+        "count": 13,
         "level": 1,
         "weekday": 2
+      },
+      {
+        "date": "2026-09-30",
+        "count": 2,
+        "level": 1,
+        "weekday": 3
       }
     ]
   ]
