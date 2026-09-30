@@ -19,6 +19,10 @@
 </p>
 
 <p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/contrib.svg"><img src="assets/oss-builder/light-contrib.svg" alt="Contribution activity" width="840"></picture>
+</p>
+
+<p align="center">
   <a href="https://mahdishafie.ir">Website</a> · <a href="https://linkedin.com/in/mahdi-shafiei-iran">LinkedIn</a> · <a href="https://github.com/Mahdi-Shafiei-IRAN">GitHub</a>
 </p>
 
