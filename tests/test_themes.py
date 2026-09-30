@@ -93,4 +93,5 @@ def test_profile_projects_pick_and_order_the_cards_and_each_links_to_its_repo(ct
 
 def test_dark_contribution_card_has_the_snake(ctx):
     dark = THEMES["oss-builder"].build(ctx).assets["contrib.svg"]
-    assert dark.count("<animateTransform") == 6  # head + 5 body segments
+    assert dark.count("<animateTransform") == 7  # head + its looking pupils + 5 body segments
+    assert 'fill="#1e1b4b"' in dark  # the snake has a face

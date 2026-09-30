@@ -60,16 +60,43 @@ def board(ctx: BuildContext, x0: float, y0: float, pitch: int, cell: int, heat: 
     key_times = ";".join(f"{i * step / loop:.4f}" for i in range(len(path)))
     segments = []
     if len(path) > 1:
-        for k in range(BODY, -1, -1):  # tail first so the head draws on top
+        for k in range(BODY, 0, -1):  # tail first so the head draws on top
             positions = ";".join(
                 f"{x0 + p[0] * pitch:g},{y0 + p[1] * pitch:g}" for p in (path[max(0, i - k)] for i in range(len(path)))
             )
-            size = cell if k == 0 else cell - 1 - k * 0.6
+            size = cell - 1 - k * 0.6
             inset = (cell - size) / 2
             segments.append(
                 f'<g><animateTransform attributeName="transform" type="translate" values="{positions}" '
                 f'keyTimes="{key_times}" calcMode="discrete" {dur}/>'
                 f'<rect x="{inset:.1f}" y="{inset:.1f}" width="{size:.1f}" height="{size:.1f}" rx="3" '
-                f'fill="{HEAD if k == 0 else TAIL}" opacity="{1 - k * 0.1:.2f}"/></g>'
+                f'fill="{TAIL}" opacity="{1 - k * 0.1:.2f}"/></g>'
             )
+        segments.append(_head(path, x0, y0, pitch, cell, key_times, dur))
     return "".join(rect(c) for c in cells) + "".join(segments)
+
+
+def _head(path: list[Point], x0: float, y0: float, pitch: int, cell: int, key_times: str, dur: str) -> str:
+    """A slightly bigger head with a cute face: big eyes whose pupils look where the snake is going."""
+    positions = ";".join(f"{x0 + p[0] * pitch:g},{y0 + p[1] * pitch:g}" for p in path)
+    looks = ["1,0"] + [
+        f"{(b[0] - a[0]) * 0.9:g},{(b[1] - a[1]) * 0.9:g}" for a, b in zip(path, path[1:])
+    ]
+    s = cell + 3                      # head is a bit larger than a cell
+    o = -1.5                          # ...and centred on it
+    eyes = "".join(
+        f'<circle cx="{ex}" cy="4.6" r="2.4" fill="#fff"/>' for ex in (3.2, 7.8)
+    )
+    pupils = "".join(f'<circle cx="{ex}" cy="4.6" r="1.2" fill="#1e1b4b"/>' for ex in (3.2, 7.8))
+    return (
+        f'<g><animateTransform attributeName="transform" type="translate" values="{positions}" '
+        f'keyTimes="{key_times}" calcMode="discrete" {dur}/>'
+        f'<rect x="{o}" y="{o}" width="{s}" height="{s}" rx="5" fill="{HEAD}"/>'
+        f"{eyes}"
+        f'<g><animateTransform attributeName="transform" type="translate" values="{";".join(looks)}" '
+        f'keyTimes="{key_times}" calcMode="discrete" {dur}/>{pupils}</g>'
+        '<circle cx="1.6" cy="8.4" r="1.1" fill="#f9a8d4" opacity=".9"/>'
+        '<circle cx="9.4" cy="8.4" r="1.1" fill="#f9a8d4" opacity=".9"/>'
+        '<path d="M4.4 8.6q1.1 1.2 2.2 0" fill="none" stroke="#1e1b4b" stroke-width=".8" stroke-linecap="round"/>'
+        "</g>"
+    )
