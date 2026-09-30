@@ -11,7 +11,14 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Mahdi-Shafiei-IRAN?tab=repositories"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/projects.svg"><img src="assets/oss-builder/light-projects.svg" alt="Projects list" width="840"></picture></a>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/projects-head.svg"><img src="assets/oss-builder/light-projects-head.svg" alt="Projects list" width="840"></picture>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Mahdi-Shafiei-IRAN/economyreporter"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/project-1.svg"><img src="assets/oss-builder/light-project-1.svg" alt="economyreporter" width="410"></picture></a>
+  <a href="https://github.com/Mahdi-Shafiei-IRAN/portfolio"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/project-2.svg"><img src="assets/oss-builder/light-project-2.svg" alt="portfolio" width="410"></picture></a>
+  <a href="https://github.com/Mahdi-Shafiei-IRAN/ITServiceLog"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/project-3.svg"><img src="assets/oss-builder/light-project-3.svg" alt="ITServiceLog" width="410"></picture></a>
+  <a href="https://github.com/Mahdi-Shafiei-IRAN/karshar"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/oss-builder/project-4.svg"><img src="assets/oss-builder/light-project-4.svg" alt="karshar" width="410"></picture></a>
 </p>
 
 <p align="center">

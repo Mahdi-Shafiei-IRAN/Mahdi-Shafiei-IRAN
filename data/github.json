@@ -10,12 +10,12 @@
     {
       "name": "Python",
       "color": "#3572A5",
-      "percent": 41.3
+      "percent": 41.5
     },
     {
       "name": "Dart",
       "color": "#00B4AB",
-      "percent": 30.5
+      "percent": 30.4
     },
     {
       "name": "HTML",
@@ -2404,5 +2404,115 @@
         "weekday": 3
       }
     ]
+  ],
+  "repos": [
+    {
+      "name": "server-status",
+      "description": "Not a status page 🎂 — a typewriter-style birthday surprise in disguise.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/server-status",
+      "stars": 2,
+      "forks": 0,
+      "language": "HTML",
+      "language_color": "#e34c26"
+    },
+    {
+      "name": "portfolio",
+      "description": "Drag a role, land on its page — or jump through the black hole to my resume.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/portfolio",
+      "stars": 2,
+      "forks": 0,
+      "language": "JavaScript",
+      "language_color": "#f1e05a"
+    },
+    {
+      "name": "karshar",
+      "description": "A Persian job board: post jobs, apply, pay and open support tickets — in Django.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/karshar",
+      "stars": 2,
+      "forks": 0,
+      "language": "HTML",
+      "language_color": "#e34c26"
+    },
+    {
+      "name": "ll1_parser",
+      "description": "Grammar in, LL(1) parse table out — compiler theory as a Django web app.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/ll1_parser",
+      "stars": 2,
+      "forks": 0,
+      "language": "Python",
+      "language_color": "#3572A5"
+    },
+    {
+      "name": "form-creator",
+      "description": "Build a form, share the link, collect answers — a mini Google Forms in Django.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/form-creator",
+      "stars": 2,
+      "forks": 0,
+      "language": "Python",
+      "language_color": "#3572A5"
+    },
+    {
+      "name": "AlgorithmProjects",
+      "description": "Binary search trees and max-heaps, built from scratch in Python.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/AlgorithmProjects",
+      "stars": 2,
+      "forks": 0,
+      "language": "Python",
+      "language_color": "#3572A5"
+    },
+    {
+      "name": "windows_figlet_app",
+      "description": "Pick a font, pick a color, print giant ASCII art — a playful figlet CLI.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/windows_figlet_app",
+      "stars": 2,
+      "forks": 0,
+      "language": "Python",
+      "language_color": "#3572A5"
+    },
+    {
+      "name": "colorful_figlet",
+      "description": "Big rainbow ASCII banners for your Python terminal apps — pip-installable.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/colorful_figlet",
+      "stars": 2,
+      "forks": 0,
+      "language": "Python",
+      "language_color": "#3572A5"
+    },
+    {
+      "name": "Mahdi-Shafiei-IRAN",
+      "description": "My neon GitHub profile, rebuilt every hour from live stats by a Python bot.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/Mahdi-Shafiei-IRAN",
+      "stars": 2,
+      "forks": 0,
+      "language": "Python",
+      "language_color": "#3572A5"
+    },
+    {
+      "name": "economyreporter",
+      "description": "Family money in one app: bank SMS → transactions, offline-first Flutter + Django.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/economyreporter",
+      "stars": 1,
+      "forks": 0,
+      "language": "Dart",
+      "language_color": "#00B4AB"
+    },
+    {
+      "name": "ITServiceLog",
+      "description": "Daily IT help-desk log with one-click reports — built for a real IT team.",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/ITServiceLog",
+      "stars": 1,
+      "forks": 0,
+      "language": "Python",
+      "language_color": "#3572A5"
+    },
+    {
+      "name": "playground",
+      "description": "",
+      "url": "https://github.com/Mahdi-Shafiei-IRAN/playground",
+      "stars": 0,
+      "forks": 0,
+      "language": "",
+      "language_color": "#8b949e"
+    }
   ]
 }
