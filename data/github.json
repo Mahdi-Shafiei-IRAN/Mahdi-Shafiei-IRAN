@@ -2402,6 +2402,12 @@
         "count": 6,
         "level": 1,
         "weekday": 3
+      },
+      {
+        "date": "2026-10-08",
+        "count": 0,
+        "level": 0,
+        "weekday": 4
       }
     ]
   ],
