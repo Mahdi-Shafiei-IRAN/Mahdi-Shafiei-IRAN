@@ -92,50 +92,6 @@
   "weeks": [
     [
       {
-        "date": "2025-10-05",
-        "count": 0,
-        "level": 0,
-        "weekday": 0
-      },
-      {
-        "date": "2025-10-06",
-        "count": 0,
-        "level": 0,
-        "weekday": 1
-      },
-      {
-        "date": "2025-10-07",
-        "count": 0,
-        "level": 0,
-        "weekday": 2
-      },
-      {
-        "date": "2025-10-08",
-        "count": 0,
-        "level": 0,
-        "weekday": 3
-      },
-      {
-        "date": "2025-10-09",
-        "count": 0,
-        "level": 0,
-        "weekday": 4
-      },
-      {
-        "date": "2025-10-10",
-        "count": 0,
-        "level": 0,
-        "weekday": 5
-      },
-      {
-        "date": "2025-10-11",
-        "count": 0,
-        "level": 0,
-        "weekday": 6
-      }
-    ],
-    [
-      {
         "date": "2025-10-12",
         "count": 0,
         "level": 0,
@@ -2420,6 +2376,14 @@
         "count": 0,
         "level": 0,
         "weekday": 6
+      }
+    ],
+    [
+      {
+        "date": "2026-10-11",
+        "count": 0,
+        "level": 0,
+        "weekday": 0
       }
     ]
   ],
